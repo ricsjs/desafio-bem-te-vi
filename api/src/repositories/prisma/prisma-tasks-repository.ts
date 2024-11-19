@@ -13,19 +13,41 @@ export class PrismaTasksRepository implements TasksRepository {
 
     async findMany(userId: string): Promise<Task[]> {
         const tasks = await prisma.task.findMany({
-            where: { 
+            where: {
                 userId: userId
             },
         });
-    
+
         return tasks;
     }
-    
-    findById(id: string): Promise<Task | null> {
-        throw new Error("Method not implemented.")
+
+    async findById(id: string) {
+        const task = await prisma.task.findUnique({
+            where: {
+                id
+            }
+        })
+
+        return task;
     }
-    update(task: Task): Promise<Task> {
-        throw new Error("Method not implemented.")
+
+    async update(data: Task) {
+        const task = await prisma.task.update({
+            where: {
+                id: data.id
+            },
+            data
+        })
+
+        return task;
+    }
+
+    async delete(id: string): Promise<void> {
+        await prisma.task.delete({
+            where: {
+                id
+            }
+        })
     }
 
 }
