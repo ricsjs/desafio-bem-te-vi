@@ -1,4 +1,4 @@
-import { TasksRepository } from "../repositories/tasks-repository";
+import { TasksRepository } from "../../repositories/tasks-repository";
 
 interface DeleteTaskServiceRequest {
     id: string

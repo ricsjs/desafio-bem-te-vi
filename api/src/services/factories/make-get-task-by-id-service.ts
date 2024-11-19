@@ -1,5 +1,5 @@
 import { PrismaTasksRepository } from "../../repositories/prisma/prisma-tasks-repository";
-import { GetTaskByIdService } from "../get-task-by-id-service";
+import { GetTaskByIdService } from "../tasks-service/get-task-by-id-service";
 
 export function makeGetTaskByIdService() {
     const prismaTasksRepository = new PrismaTasksRepository();

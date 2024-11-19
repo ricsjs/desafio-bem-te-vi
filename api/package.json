@@ -1,12 +1,14 @@
 {
   "name": "my-app",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "test": "vitest run --dir src/services"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "dotenv": "^16.4.5",
     "hono": "^4.6.10",
+    "vitest": "^2.1.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
