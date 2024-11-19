@@ -3,9 +3,14 @@ import { Task, Prisma } from "@prisma/client"
 import { TasksRepository } from "../tasks-repository"
 
 export class PrismaTasksRepository implements TasksRepository {
-    create(data: Prisma.TaskCreateInput): Promise<Task> {
-        throw new Error("Method not implemented.")
+    async create(data: Prisma.TaskCreateInput) {
+        const task = await prisma.task.create({
+            data,
+        })
+
+        return task;
     }
+
     async findMany(userId: string): Promise<Task[]> {
         const tasks = await prisma.task.findMany({
             where: { 
