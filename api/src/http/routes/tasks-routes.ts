@@ -3,6 +3,7 @@ import { getAllTasks } from '../controllers/get-all-tasks';
 import { createTask } from '../controllers/create-task';
 import { getTaskById } from '../controllers/get-task-by-id';
 import { updateTask } from '../controllers/update-task';
+import { deleteTask } from '../controllers/delete-task';
 
 const tasksRouter = new Hono();
 
@@ -23,7 +24,7 @@ tasksRouter.put('/update/:id', async (c) => {
 });
 
 tasksRouter.delete('/delete/:id', async (c) => {
-  return;
+  return deleteTask(c);
 });
 
 export default tasksRouter;
