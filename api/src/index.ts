@@ -1,14 +1,12 @@
-import { Hono } from 'hono'
-import { getAllTasks } from './http/controllers/get-all-tasks';
+import { Hono } from 'hono';
+import tasksRouter from './http/routes/tasks-routes';
 
-const app = new Hono()
+const app = new Hono();
 
 app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+  return c.text('Hello Hono!');
+});
 
-app.get('/tasks/:userId', async (c) => {
-    return getAllTasks(c);
-  });
+app.route('/tasks', tasksRouter);
 
-export default app
+export default app;
