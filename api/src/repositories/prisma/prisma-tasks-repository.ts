@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma"
-import { Task, Prisma } from "@prisma/client"
+import { Task, Prisma, TaskStatus } from "@prisma/client"
 import { TasksRepository } from "../tasks-repository"
 
 export class PrismaTasksRepository implements TasksRepository {
@@ -36,7 +36,7 @@ export class PrismaTasksRepository implements TasksRepository {
             where: {
                 id: data.id
             },
-            data
+            data,
         })
 
         return task;
