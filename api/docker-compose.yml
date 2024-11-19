@@ -1,11 +1,29 @@
-version: '3'
+version: '3.8'
 
 services:
   bemtevi-pg:
     image: bitnami/postgresql
-    ports:
-      - 5432:5432
     environment:
       - POSTGRESQL_USERNAME=docker
       - POSTGRESQL_PASSWORD=docker
       - POSTGRESQL_DATABASE=bemtevi
+    ports:
+      - 5432:5432
+    networks:
+      - bemtevi-net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - 80:80
+    depends_on:
+      - bemtevi-pg
+    networks:
+      - bemtevi-net
+
+networks:
+  bemtevi-net:
+    driver: bridge
