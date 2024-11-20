@@ -1,5 +1,5 @@
 import { Task, TaskStatus } from "@prisma/client";
-import { TasksRepository } from "../repositories/tasks-repository";
+import { TasksRepository } from "../../repositories/tasks-repository";
 
 
 interface UpdateTaskServiceRequest {

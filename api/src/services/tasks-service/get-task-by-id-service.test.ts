@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { MockTasksRepository } from "../../repositories/mock/mock-tasks-repository";
 import { GetTaskByIdService } from "./get-task-by-id-service";
-import { object } from "zod";
 
 let tasksRepository: MockTasksRepository;
 let sut: GetTaskByIdService;
@@ -20,7 +19,6 @@ describe('Get Task By Id Service', () => {
             description: "descrição da nova task",
             user: { connect: { id: userId } },
         });
-        console.log(task); // Log para garantir que a tarefa foi criada corretamente
         return task;
     };
 
@@ -29,8 +27,6 @@ describe('Get Task By Id Service', () => {
         const task = await createTask('user-id');
 
         const { task: fetchedTask } = await sut.execute({ id: task.id });
-
-        console.log(task); // Log para verificar o que é retornado
 
         expect(fetchedTask).toHaveProperty('id');
         expect(fetchedTask).toHaveProperty('name');
