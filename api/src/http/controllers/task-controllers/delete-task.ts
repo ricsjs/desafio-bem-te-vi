@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { makeDeleteTasksService } from "../../services/factories/make-delete-task-service";
+import { makeDeleteTasksService } from "../../../services/factories/tasks-factories/make-delete-task-service";
 
 export async function deleteTask(c: any) {
     const DeleteTaskSchema = z.object({
