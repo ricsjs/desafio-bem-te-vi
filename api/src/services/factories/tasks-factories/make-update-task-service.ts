@@ -1,5 +1,5 @@
-import { PrismaTasksRepository } from "../../repositories/prisma/prisma-tasks-repository";
-import { UpdateTaskService } from "../tasks-service/update-task-service";
+import { PrismaTasksRepository } from "../../../repositories/prisma/prisma-tasks-repository";
+import { UpdateTaskService } from "../../tasks-service/update-task-service";
 
 export function makeUpdateTasksService() {
     const prismaTasksRepository = new PrismaTasksRepository();

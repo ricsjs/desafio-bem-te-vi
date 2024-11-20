@@ -1,9 +1,9 @@
 import { Hono } from 'hono';
-import { getAllTasks } from '../controllers/get-all-tasks';
-import { createTask } from '../controllers/create-task';
-import { getTaskById } from '../controllers/get-task-by-id';
-import { updateTask } from '../controllers/update-task';
-import { deleteTask } from '../controllers/delete-task';
+import { getAllTasks } from '../controllers/task-controllers/get-all-tasks';
+import { createTask } from '../controllers/task-controllers/create-task';
+import { getTaskById } from '../controllers/task-controllers/get-task-by-id';
+import { updateTask } from '../controllers/task-controllers/update-task';
+import { deleteTask } from '../controllers/task-controllers/delete-task';
 
 const tasksRouter = new Hono();
 

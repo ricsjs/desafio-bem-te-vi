@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { makeUpdateTasksService } from "../../services/factories/make-update-task-service";
+import { makeUpdateTasksService } from "../../../services/factories/tasks-factories/make-update-task-service";
 
 export async function updateTask(c: any) {
   const UpdateTaskSchema = z.object({

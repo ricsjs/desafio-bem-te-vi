@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { makeGetAllTasksService } from "../../services/factories/make-get-all-tasks-service";
+import { makeGetAllTasksService } from "../../../services/factories/tasks-factories/make-get-all-tasks-service";
 
 export async function getAllTasks(c: any) {
     const GetAllTasksSchema = z.object({
