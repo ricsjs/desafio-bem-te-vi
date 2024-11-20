@@ -37,8 +37,6 @@ describe('Update Task Service', () => {
 
         const { task } = await sut.execute(updatedData);
 
-        console.log({ task })
-
         expect(task).toHaveProperty('id', createdTask.id);
         expect(task).toHaveProperty('name', 'Updated Task Name');
         expect(task).toHaveProperty('description', 'Updated task description');
