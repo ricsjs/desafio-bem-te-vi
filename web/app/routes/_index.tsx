@@ -1,36 +1,49 @@
-import type { MetaFunction } from "@remix-run/node";
+import { MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
+import { Button, Input, Label, TextField } from "react-aria-components";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Login Page" },
+    { name: "description", content: "Login page using React Aria Components and TailwindCSS" },
   ];
 };
 
-export default function Index() {
+export default function Login() {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="flex flex-col items-center gap-16">
-        <header className="flex flex-col items-center gap-9">
-          <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
-            Welcome Back
-          </h1>
-        </header>
-        <nav className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
-          <p className="leading-6 text-gray-700 dark:text-gray-200">
-            What&apos;s next?
-          </p>
-          <ul>
-            <li>
-              <a
-                className="group flex items-center gap-3 self-stretch p-3 leading-normal text-blue-700 hover:underline dark:text-blue-500"
-                target="_blank"
-                rel="noreferrer"
-              >
-              </a>
-            </li>
-          </ul>
-        </nav>
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg dark:bg-gray-800">
+        <h1 className="text-3xl font-semibold text-center text-gray-900 dark:text-white mb-6">Login</h1>
+        <form className="space-y-6">
+          <TextField className="w-full">
+            <Label className="text-lg text-gray-700 dark:text-gray-300">Email</Label>
+            <Input
+              type="email"
+              className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              placeholder="Enter your email"
+            />
+          </TextField>
+
+          <TextField className="w-full">
+            <Label className="text-lg text-gray-700 dark:text-gray-300">Password</Label>
+            <Input
+              className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              type="password"
+              placeholder="Enter your password"
+            />
+          </TextField>
+
+          <Button
+            className="w-full p-3 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
+          >
+            Login
+          </Button>
+        </form>
+
+        <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-600 hover:text-blue-800 dark:text-blue-400">Sign up</Link>
+        </p>
       </div>
     </div>
   );
