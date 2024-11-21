@@ -13,36 +13,36 @@ export default function Login() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg dark:bg-gray-800">
-        <h1 className="text-3xl font-semibold text-center text-gray-900 dark:text-white mb-6">Login</h1>
+        <h1 className="text-3xl font-semibold text-center text-gray-900 dark:text-white mb-6">Entrar</h1>
         <form className="space-y-6">
           <TextField className="w-full">
-            <Label className="text-lg text-gray-700 dark:text-gray-300">Email</Label>
+            <Label className="text-lg text-gray-700 dark:text-gray-300">E-mail</Label>
             <Input
               type="email"
               className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-              placeholder="Enter your email"
+              placeholder="Digite seu e-mail"
             />
           </TextField>
 
           <TextField className="w-full">
-            <Label className="text-lg text-gray-700 dark:text-gray-300">Password</Label>
+            <Label className="text-lg text-gray-700 dark:text-gray-300">Senha</Label>
             <Input
               className="w-full p-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Digite sua senha"
             />
           </TextField>
 
           <Button
             className="w-full p-3 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700"
           >
-            Login
+            Entrar
           </Button>
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-600 hover:text-blue-800 dark:text-blue-400">Sign up</Link>
+          Ainda não tem uma conta?{" "}
+          <Link to="/signup" className="text-blue-600 hover:text-blue-800 dark:text-blue-400">Cadastre-se</Link>
         </p>
       </div>
     </div>
