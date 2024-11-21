@@ -9,6 +9,7 @@ import {
 } from "@remix-run/react";
  
 import styles from "./index.css?url"
+import { AuthProvider } from "./context/AuthContext";
  
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -24,10 +25,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
+        <AuthProvider>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </AuthProvider>
       </body>
     </html>
   );
