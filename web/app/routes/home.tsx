@@ -1,6 +1,7 @@
 import { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { Button, Input, Label, TextField } from "react-aria-components";
+import { withAuthProtection } from "../components/privateRoute";
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,7 +10,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export default function Home() {
+function Home() {
 
   const tasks = [
     { id: 1, title: "Task 1", description: "Description for Task 1" },
@@ -85,3 +86,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withAuthProtection(Home);
