@@ -2,13 +2,21 @@ import { useNavigate } from "@remix-run/react";
 import { destroyCookie, setCookie } from "nookies";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
+
 interface SignInCredentials { 
     email: string;
     password: string;
 }
 
+interface SignUpCredentials {
+  name: string;
+  email: string;
+  password: string;
+}
+
 type AuthContextData = {
     signIn(credentials: SignInCredentials): void;
+    signUp(credentials: SignUpCredentials): void;
     user: string;
     isAuth: boolean;
     signOut: () => void;
@@ -76,6 +84,30 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setCredentials(credentials);
       }
 
+      useEffect(() => {
+        if (credentials) {
+          const signUp = async () => {
+            try {
+              const response = await api.post("users/signup", credentials);
+              console.log(response, "Cadastro bem sucedido");
+      
+              navigate("/");
+            } catch (err) {
+              setUser("");
+              console.error(err);
+            } finally {
+              setCredentials(null);
+            }
+          };
+      
+          signUp();
+        }
+      }, [credentials, navigate]);
+
+      function signUp(credentials: SignUpCredentials) {
+        setCredentials(credentials);
+      }
+
       function signOut() {
         destroyCookie(undefined, "btvAuth.token");
         localStorage.removeItem("@btv-user");
@@ -87,6 +119,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         <AuthContext.Provider
           value={{
             signIn,
+            signUp,
             isAuth,
             user,
             signOut,
