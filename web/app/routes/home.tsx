@@ -51,8 +51,7 @@ function Home() {
     }
    }, [userId]);
 
-   async function handleCreateTask(event: React.FormEvent) {
-    event.preventDefault();
+   async function handleCreateTask() {
     if (!taskName || !taskDescription) {
       toast.error("Por favor, preencha todos os campos!");
       return;
@@ -67,7 +66,6 @@ function Home() {
 
       const response = await createTask(taskData);
       if (response.success) {
-        toast.success("Tarefa adicionada com sucesso!");
         setTaskName("");
         setTaskDescription("");
         getAllTasks();
