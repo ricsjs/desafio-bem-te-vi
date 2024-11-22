@@ -5,6 +5,7 @@ import { withAuthProtection } from "../components/privateRoute";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { getAllTasksData } from "../utils/tasks/api";
+import { toast } from "react-toastify";
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,7 +32,7 @@ function Home() {
      try {
        getAllTasksData(userId).then((response) => {
         if (response.tasks.length == 0) {
-          console.log("Nenhum registro");
+          toast.info("Nenhum registro encontrado!");
         } 
         setTasksData(response.tasks);
        })
