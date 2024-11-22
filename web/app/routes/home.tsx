@@ -1,10 +1,9 @@
 import { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
-import { Button, Input, Label, TextField } from "react-aria-components";
+import { Button, Dialog, DialogTrigger, Heading, Input, Label, Modal, TextField } from "react-aria-components";
 import { withAuthProtection } from "../components/privateRoute";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { getAllTasksData } from "../utils/tasks/api";
+import { createTask, deleteTask, getAllTasksData } from "../utils/tasks/api";
 import { toast } from "react-toastify";
 
 export const meta: MetaFunction = () => {
@@ -25,6 +24,11 @@ export interface TaskProps {
 function Home() {
   const { user } = useContext(AuthContext);
   const [tasksData, setTasksData] = useState<TaskProps[]>([]);
+
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+
+  const [isOpen, setOpen] = useState(false);
   
   const userId = user;
 
@@ -47,12 +51,42 @@ function Home() {
     }
    }, [userId]);
 
+   async function handleCreateTask(event: React.FormEvent) {
+    event.preventDefault();
+    if (!taskName || !taskDescription) {
+      toast.error("Por favor, preencha todos os campos!");
+      return;
+    }
+
+    try {
+      const taskData = {
+        userId,
+        name: taskName,
+        description: taskDescription,
+      }
+
+      const response = await createTask(taskData);
+      if (response.success) {
+        toast.success("Tarefa adicionada com sucesso!");
+        setTaskName("");
+        setTaskDescription("");
+        getAllTasks();
+      }
+    } catch (error) {
+      window.location.reload();
+      console.error("Erro ao criar tarefa:", error);
+      toast.error("Erro ao criar a tarefa. Tente novamente mais tarde!");
+    }
+   }
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Search:", event.target.value);
   };
 
-  const handleDelete = (id: string) => {
-    console.log("Delete task with id:", id);
+  const handleDelete = async (id: string) => {
+    await deleteTask(id);
+    toast.success("Tarefa deletada com sucesso!");
+    getAllTasks();
   };
 
   const handleEdit = (id: string) => {
@@ -71,11 +105,60 @@ function Home() {
               onChange={handleSearch}
             />
           </TextField>
-          <Link to="/add-task">
-            <Button className="ml-4 p-3 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-800 dark:hover:bg-blue-700">
+          <DialogTrigger>
+            <Button
+              onPress={() => setOpen(true)}
+              className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
               Nova Tarefa
             </Button>
-          </Link>
+            <Modal
+              isDismissable isOpen={isOpen} onOpenChange={setOpen}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            >
+              <Dialog className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                <form onSubmit={handleCreateTask}>
+                  <Heading
+                    slot="title"
+                    className="mb-4 text-lg font-bold text-gray-900 dark:text-white"
+                  >
+                    Nova Tarefa
+                  </Heading>
+                  <TextField className="mb-4">
+                    <Label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Nome da tarefa:
+                    </Label>
+                    <Input
+                      onChange={(e) => setTaskName(e.target.value)}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    />
+                  </TextField>
+                  <TextField className="mb-4">
+                    <Label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Descrição:
+                    </Label>
+                    <Input
+                      onChange={(e) => setTaskDescription(e.target.value)}
+                      className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    />
+                  </TextField>
+                  <div className="flex justify-between mt-4 space-x-4">
+                    <Button
+                      type="submit"
+                      className="flex-1 px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      Criar Tarefa
+                    </Button>
+                    <Button
+                      slot="close"
+                      className="flex-1 px-4 py-2 text-white bg-gray-600 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    >
+                      Fechar
+                    </Button>
+                  </div>
+                </form>
+              </Dialog>
+            </Modal>
+          </DialogTrigger>
         </div>
 
         <ul className="space-y-4">
