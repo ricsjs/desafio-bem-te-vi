@@ -20,7 +20,8 @@
     "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-aria-components": "^1.4.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.48.0",

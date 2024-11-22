@@ -2,6 +2,9 @@ import { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { Button, Input, Label, TextField } from "react-aria-components";
 import { withAuthProtection } from "../components/privateRoute";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { getAllTasksData } from "../utils/tasks/api";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,23 +13,48 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-function Home() {
+export interface TaskProps {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  userId: string;
+}
 
-  const tasks = [
-    { id: 1, title: "Task 1", description: "Description for Task 1" },
-    { id: 2, title: "Task 2", description: "Description for Task 2" },
-    { id: 3, title: "Task 3", description: "Description for Task 3" },
-  ];
+function Home() {
+  const { user } = useContext(AuthContext);
+  const [tasksData, setTasksData] = useState<TaskProps[]>([]);
+  
+  const userId = user;
+
+  const getAllTasks = async () => {
+     try {
+       getAllTasksData(userId).then((response) => {
+        if (response.tasks.length == 0) {
+          console.log("Nenhum registro");
+        } 
+        setTasksData(response.tasks);
+       })
+     } catch(error) {
+      console.log(error)
+     }
+   }
+
+   useEffect(() => {
+    if (userId) {
+      getAllTasks();
+    }
+   }, [userId]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Search:", event.target.value);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     console.log("Delete task with id:", id);
   };
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: string) => {
     console.log("Edit task with id:", id);
   };
 
@@ -50,7 +78,7 @@ function Home() {
         </div>
 
         <ul className="space-y-4">
-          {tasks.map((task) => (
+          {tasksData.map((task) => (
             <li
               key={task.id}
               className="p-4 bg-gray-100 rounded-lg shadow-md dark:bg-gray-700"
@@ -58,7 +86,7 @@ function Home() {
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {task.title}
+                    {task.name}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
                     {task.description}
