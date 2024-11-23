@@ -28,7 +28,7 @@ export default function Signup() {
         }
 
         try {
-        await signUp({ name, email, password });
+            signUp({ name, email, password });
         } catch (err) {
         setError("E-mail ou senha inválidos.");
         }
