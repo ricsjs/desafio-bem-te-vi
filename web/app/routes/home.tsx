@@ -50,7 +50,8 @@ function Home() {
 
   const displayStatus = taskStatusMapping[taskStatus] || "Desconhecido";
 
-  const [isOpen, setOpen] = useState(false);
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -124,7 +125,7 @@ function Home() {
 
         const updateResponse = await updateTask(taskData.id, taskData);
         if (updateResponse.success && updateResponse.task) {
-          setOpen(false);
+          setEditModalOpen(false);
           getAllTasks();
         } else {
           window.location.reload();
@@ -140,7 +141,7 @@ function Home() {
         setTaskName(task.name);
         setTaskDescription(task.description);
         setTaskStatus(task.status as keyof TaskStatus);
-        setOpen(true);
+        setEditModalOpen(true);
         setIsEditing(true);
       }
     } catch (error) {
@@ -148,8 +149,6 @@ function Home() {
       console.error(error);
     }
   };
-
-
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -165,12 +164,12 @@ function Home() {
           </TextField>
           <DialogTrigger>
             <Button
-              onPress={() => setOpen(true)}
+              onPress={() => setCreateModalOpen(true)}
               className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
               Nova Tarefa
             </Button>
             <Modal
-              isDismissable isOpen={isOpen} onOpenChange={setOpen}
+              isDismissable isOpen={isCreateModalOpen} onOpenChange={setCreateModalOpen}
               className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
             >
               <Dialog className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -249,8 +248,8 @@ function Home() {
                     </Button>
                     <Modal
                       isDismissable
-                      isOpen={isOpen}
-                      onOpenChange={setOpen}
+                      isOpen={isEditModalOpen}
+                      onOpenChange={setEditModalOpen}
                       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
                     >
                       <Dialog className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
