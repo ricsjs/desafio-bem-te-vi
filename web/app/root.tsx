@@ -10,6 +10,8 @@ import {
  
 import styles from "./index.css?url"
 import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
  
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -26,6 +28,7 @@ export default function App() {
       </head>
       <body>
         <AuthProvider>
+          <ToastContainer />
           <Outlet />
           <ScrollRestoration />
           <Scripts />

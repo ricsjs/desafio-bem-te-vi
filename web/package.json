@@ -12,6 +12,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@react-spectrum/toast": "^3.0.0-beta.17",
+    "@remix-run/css-bundle": "^2.15.0",
     "@remix-run/node": "^2.14.0",
     "@remix-run/react": "^2.14.0",
     "@remix-run/serve": "^2.14.0",
@@ -20,7 +22,9 @@
     "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-aria-components": "^1.4.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-toastify": "^10.0.6",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.48.0",

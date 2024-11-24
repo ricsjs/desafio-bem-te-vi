@@ -3,6 +3,7 @@ import { Link } from "@remix-run/react";
 import { useContext, useState } from "react";
 import { Button, Input, Label, TextField } from "react-aria-components";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,7 +16,7 @@ export default function Login() {
   const { signIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   async function login(event: React.FormEvent) {
     event.preventDefault();
@@ -27,8 +28,10 @@ export default function Login() {
     }
 
     try {
-      await signIn({ email, password });
+      signIn({ email, password });
     } catch (err) {
+      console.log(err)
+      toast.error("E-mail ou senha inválidos.")
       setError("E-mail ou senha inválidos.");
     }
   }
