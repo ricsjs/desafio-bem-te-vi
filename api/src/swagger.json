@@ -1,0 +1,225 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "TASKS API",
+        "description": "CRUD de tarefas.",
+        "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/users/signup": {
+            "post": {
+                "summary": "Cria um novo usuário",
+                "description": "Esta rota registra um novo usuário com os dados fornecidos.",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Dados do novo usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "Email do usuário"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "description": "Senha do usuário"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "Nome do usuário"
+                                }
+                            },
+                            "required": [
+                                "email",
+                                "password",
+                                "name"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "/users/login": {
+            "post": {
+                "summary": "Autentica um usuário",
+                "description": "Esta rota autentica um usuário com as credenciais fornecidas (email e senha).",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Credenciais de login do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "Email do usuário"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "description": "Senha do usuário"
+                                }
+                            },
+                            "required": [
+                                "email",
+                                "password"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "/tasks/user/{userId}": {
+            "get": {
+                "summary": "Retorna todas as tarefas de um usuário",
+                "description": "Retorna todas as tarefas associadas ao usuário especificado.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário"
+                    }
+                ]
+            }
+        },
+        "/tasks/task/{id}": {
+            "get": {
+                "summary": "Retorna uma tarefa específica",
+                "description": "Retorna a tarefa associada ao ID fornecido.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID da tarefa"
+                    }
+                ]
+            }
+        },
+        "/tasks/create": {
+            "post": {
+                "summary": "Cria uma nova tarefa",
+                "description": "Cria uma nova tarefa para um usuário.",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "description": "Dados da nova tarefa",
+                        "schema": {
+                            "$ref": "#/definitions/TaskInput"
+                        }
+                    }
+                ]
+            }
+        },
+        "/tasks/update/{id}": {
+            "put": {
+                "summary": "Atualiza uma tarefa existente",
+                "description": "Atualiza os detalhes de uma tarefa existente.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID da tarefa"
+                    },
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "description": "Dados atualizados da tarefa",
+                        "schema": {
+                            "$ref": "#/definitions/TaskInput"
+                        }
+                    }
+                ]
+            }
+        },
+        "/tasks/delete/{id}": {
+            "delete": {
+                "summary": "Deleta uma tarefa",
+                "description": "Deleta a tarefa associada ao ID fornecido.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID da tarefa"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "Task": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "PENDING",
+                        "IN_PROGRESS",
+                        "COMPLETED",
+                        "CANCELLED"
+                    ]
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "TaskInput": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "PENDING",
+                        "IN_PROGRESS",
+                        "COMPLETED",
+                        "CANCELLED"
+                    ]
+                }
+            }
+        }
+    }
+}
